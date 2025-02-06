@@ -1,18 +1,40 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <UpperBanner />
+    <TheFeature />
+    <TopItems />
+    <FlashDeals :products="FlashDeals" /> />
+    <!-- Ensure product is passed correctly -->
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+// Import components
+import UpperBanner from "@/components/HomePage/UpperBanner.vue";
+import TheFeature from "@/components/HomePage/TheFeature.vue";
+import TopItems from "@/components/HomePage/TopItems.vue";
+import FlashDeals from "@/components/HomePage/FlashDeals.vue";
+import { productModule } from "@/store/products";
+import { mapActions, mapState } from "pinia";
 
 export default {
-  name: "HomeView",
   components: {
-    HelloWorld,
+    UpperBanner,
+    TheFeature,
+    TopItems,
+    FlashDeals,
+  },
+  computed: {
+    // Map FlashDeals state from Pinia
+    ...mapState(productModule, ["FlashDeals"]),
+  },
+  methods: {
+    // Map getProducts action from Pinia store
+    ...mapActions(productModule, ["getProducts"]),
+  },
+  async mounted() {
+    // Fetch products when the component is mounted
+    await this.getProducts();
   },
 };
 </script>
