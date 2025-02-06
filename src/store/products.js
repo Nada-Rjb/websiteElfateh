@@ -13,7 +13,7 @@ export const productModule = defineStore("productModule", {
     async getProducts() {
       try {
         const response = await axios.get(
-          "https://erp.elfateh.online/api/resource/Website%20Item?fields=%5B%22%2A%22%5D&filters=%5B%5B%22custom_flash_deals%22%2C%20%22%3D%22%2C%20%221%22%5D%5D",
+          "https://erp.elfateh.online/api/method/general_customization.general_customiztion.api.test",
           {
             headers: {
               Authorization: `Basic ${auth}`,
@@ -21,11 +21,12 @@ export const productModule = defineStore("productModule", {
           }
         );
 
-        console.log("API Response:", response.data); // Log the response to check the structure
-        this.FlashDeals = response.data.data;
-        if (response.data && Array.isArray(response.data.data)) {
+        console.log("API ggResponse:", response.data); // Log the response to check the structure
+        this.FlashDeals = response.data.message;
+        console.log("FlashDeals:", this.FlashDeals);
+        if (response.data && Array.isArray(response.data.message)) {
           // Safely slice the products array from 'message'
-          this.FlashDeals = response.data.data;
+          this.FlashDeals = response.data.message;
           console.log("FlashDeals:", this.FlashDeals);
         } else {
           console.warn("Products not found or response format is incorrect");
